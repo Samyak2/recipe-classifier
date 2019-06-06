@@ -37,7 +37,7 @@ def get_features(text):
     features = dict([(i, True) for i in features])
     return features
 
-def classify_and_extract(i, train=False):
+def classify_and_extract(i, train=False, lines=300):
     if train:
         count = 0
         json_file_name = "recipes_raw_nosource_fn.json"
@@ -49,7 +49,7 @@ def classify_and_extract(i, train=False):
                 if event == "string" and "ingredients.item" in prefix:
                     training["ingredients"] += [value]
                 count+=1
-                if(count > 300):
+                if(count > lines):
                     break
             # ingredients = ijson.items(input_file, "item")
             # for i in ingredients:
@@ -125,7 +125,7 @@ def classify_and_extract(i, train=False):
     # print(out)
 
     if out == "ingredients":
-        return (out, ingparse(i))
+        return (out, ingparse(i, expanded=True))
 
     else:
         sentences = nltk.sent_tokenize(i.lower())
@@ -152,3 +152,5 @@ if __name__ == "__main__":
     # classify_and_extract("", train=True)
     print(classify_and_extract("Bring a large pot of lightly salted water to a boil. Cook lasagna noodles in boiling water for 8 to 10 minutes. Drain noodles, and rinse with cold water. In a mixing bowl, combine ricotta cheese with egg, remaining parsley, and 1/2 teaspoon salt."))
     print(classify_and_extract("2 cloves garlic, crushed"))
+    print(classify_and_extract("3/4 pound mozzarella cheese, sliced"))
+    print(classify_and_extract("12 lasagna noodles"))
