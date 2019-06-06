@@ -5,7 +5,7 @@ from nltk.tag import pos_tag, map_tag, StanfordPOSTagger
 import pickle
 from nltk.classify import MaxentClassifier
 from ingredient_parser.en import parse as ingparse
-
+nltk.data.path.append('./nltk_data/')
 # train = False
 
 def get_features(text):
@@ -149,7 +149,7 @@ def classify_and_extract(i, train=False, lines=300):
         return (out, words)
 
 if __name__ == "__main__":
-    # classify_and_extract("", train=True)
+    # classify_and_extract("", train=True, lines=1000)
     print(classify_and_extract("Bring a large pot of lightly salted water to a boil. Cook lasagna noodles in boiling water for 8 to 10 minutes. Drain noodles, and rinse with cold water. In a mixing bowl, combine ricotta cheese with egg, remaining parsley, and 1/2 teaspoon salt."))
     print(classify_and_extract("2 cloves garlic, crushed"))
     print(classify_and_extract("3/4 pound mozzarella cheese, sliced"))
